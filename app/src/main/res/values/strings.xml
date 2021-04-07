@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Minecraft Server-Lan Switcher</string>
+    <string name="error_invalid_textbox_args">Invalid input parameters.</string>
+    <string name="error_invalid_integer_args">Invalid textbox integer value!</string>
+    <string name="useless01">How To Use This App?</string>
+    <string name="useless02">It is quite easy to use this app, To do so you have to first get a public ip and host a server on it, then on the client android you can enter the server\'s IP and address and then click on start relaying data, After this you would just have to open the game, go to LAN and click on the coming server! And VOILA you can play with your friends without xbox auth..!</string>
+    <string name="useless03">NOTE: This app just skips the xbox login part by establishing a proxy to relay traffic, But IT DOES NOT bypass xbox authenticated server, Chances are that if you are trying to connect to protected server, It will give you some XBOX Auth Error, SO it wont work in that case!!</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Minecraft_Server-Lan_Switcher.iml" filepath="$PROJECT_DIR$/.idea/modules/Minecraft_Server-Lan_Switcher.iml" group="Minecraft_Server-Lan_Switcher" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="Minecraft Server-Lan Switcher/app" />
+    </modules>
+  </component>
+</project>
