@@ -14,7 +14,7 @@
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
-        android:text="Minecraft Server-Lan Switcher"
+        android:text="@string/app_name"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"

@@ -41,7 +41,9 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.Selector;
@@ -54,12 +56,14 @@ import static com.skullzbones.mcmstl.STORAGE.DATA.MC_GAME_PORT;
 public class LocalVPNService extends VpnService
 {
     private static final String TAG = LocalVPNService.class.getSimpleName();
-    private static final String VPN_ADDRESS = "10.0.0.2"; // Only IPv4 support for now
+    public static final String VPN_ADDRESS = "10.0.0.2"; // Only IPv4 support for now
     private static final String VPN_ROUTE = "0.0.0.0"; // Intercept everything
     private static final String VPN_ALLOWED_PACKAGE_NAME = "com.mojang.minecraftpe";
 
     public static final String STOP_VPN_FLAG = "stop_vpn";
     public static final String BROADCAST_VPN_STATE = "xyz.hexene.localvpn.VPN_STATE";
+    private static InetAddress GLOBAL_TARGET_IP = null;
+    private static Integer GLOBAL_TARGET_PORT = null;
 
     private static boolean isRunning = false;
 
@@ -134,6 +138,12 @@ public class LocalVPNService extends VpnService
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
+        try {
+            GLOBAL_TARGET_IP = InetAddress.getByName(intent.getStringExtra("destaddr"));
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        GLOBAL_TARGET_PORT = intent.getIntExtra("destport",19132);
         return START_STICKY;
     }
 
@@ -171,7 +181,7 @@ public class LocalVPNService extends VpnService
                 cleanup();
             }
 
-            startService(new Intent(context, MCPROXY_SERVICE.class));
+           // startService(new Intent(context, MCPROXY_SERVICE.class));
 
         }
     };
@@ -234,7 +244,14 @@ public class LocalVPNService extends VpnService
                         bufferToNetwork.clear();
 
                     // TODO: Block when not connected
-                    int readBytes = vpnInput.read(bufferToNetwork);
+                    int readBytes = 0;
+                    try {
+                        readBytes = vpnInput.read(bufferToNetwork);
+                    }
+                    catch (Exception e){
+                        Log.i(TAG,"Shouldnt Be HEre");
+                        e.printStackTrace();
+                    }
                     if (readBytes > 0)
                     {
                         dataSent = true;
@@ -242,7 +259,7 @@ public class LocalVPNService extends VpnService
                         Packet packet = new Packet(bufferToNetwork);
                         if (packet.isUDP())
                         {
-                            RakNetCapturePort(packet);
+                            packet = ForwardPacket(packet);
                             deviceToNetworkUDPQueue.offer(packet);
                         }
                         else if (packet.isTCP())
@@ -296,17 +313,27 @@ public class LocalVPNService extends VpnService
             }
         }
 
+        private Packet ForwardPacket(Packet packet) {
+            if(packet.udpHeader.destinationPort==GLOBAL_TARGET_PORT && packet.ip4Header.destinationAddress.equals(GLOBAL_TARGET_IP)){
+                localbrodcastManager.sendBroadcast(new Intent(STOP_VPN_FLAG));
+            }
+
+            if(packet.udpHeader.destinationPort == 19132 && packet.ip4Header.destinationAddress!=GLOBAL_TARGET_IP){
+                packet.ip4Header.destinationAddress = GLOBAL_TARGET_IP;
+                packet.udpHeader.destinationPort = GLOBAL_TARGET_PORT;
+                Log.i(TAG,"Forwarded Packets To Local Client!");
+            }
+            return packet;
+        }
+
         boolean toCaptureAgain = true;
         private void RakNetCapturePort(Packet packet) {
-            Log.i(TAG,"UDP "+packet.toString());
-
             if(!toCaptureAgain) return;
             if(packet.udpHeader.destinationPort != 19132) return;
-
             toCaptureAgain=false;
 
             MC_GAME_PORT = packet.udpHeader.sourcePort;
-            localbrodcastManager.sendBroadcast(new Intent(STOP_VPN_FLAG));
+            //localbrodcastManager.sendBroadcast(new Intent(STOP_VPN_FLAG));
 
             Log.i(TAG,"Starting Ping Service");
             RaknetPing.startPing();

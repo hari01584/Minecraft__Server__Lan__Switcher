@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Minecraft Server-Lan Switcher</string>
+    <string name="app_name">PE Server Bridge</string>
     <string name="error_invalid_textbox_args">Invalid input parameters.</string>
     <string name="error_invalid_integer_args">Invalid textbox integer value!</string>
     <string name="useless01">How To Use This App?</string>

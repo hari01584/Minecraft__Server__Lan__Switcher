@@ -181,7 +181,10 @@ public class MainFragment extends Fragment {
         waitingForVPNStart = true;
         localVPNService = new LocalVPNService();
         intentStart = new Intent(getContext(), localVPNService.getClass());
+        intentStart.putExtra("destaddr",mViewModel.ipaddress);
+        intentStart.putExtra("destport",mViewModel.port);
         getContext().startService(intentStart);
+
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setComponent(new ComponentName("com.mojang.minecraftpe","com.mojang.minecraftpe.MainActivity"));
         startActivity(intent);

@@ -21,6 +21,9 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.skullzbones.mcmstl.MainActivity;
+import com.skullzbones.mcmstl.Networks.LocalVPNService;
+import com.skullzbones.mcmstl.STORAGE.DATA;
+import com.skullzbones.mcmstl.ui.main.MainFragment;
 import com.skullzbones.mcmstl.util.Utility;
 
 import org.apache.commons.codec.DecoderException;
@@ -57,22 +60,23 @@ public class RaknetPing
             e.printStackTrace();
         }
         DatagramPacket dp = null;
-
+        Log.i(TAG,"1");
         try {
             //LOCAL_BRODCAST_ADDR
             dp = new DatagramPacket(packetByte, packetByte.length, InetAddress.getByName("127.0.0.1"), MC_GAME_PORT);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-
+        Log.i(TAG,"2");
 
         final DatagramSocket s = sock;
         final DatagramPacket p = dp;
-
+        Log.i(TAG,"3");
 
         scheduler.scheduleAtFixedRate(new Runnable() {
             public void run() {
                 try {
+                    Log.i(TAG,"ATLEAST");
                     s.send(p);
                 } catch (IOException e) {
                     e.printStackTrace();
