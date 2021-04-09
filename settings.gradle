@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Minecraft Server-Lan Switcher"
+rootProject.name = "PE Server Bridge"

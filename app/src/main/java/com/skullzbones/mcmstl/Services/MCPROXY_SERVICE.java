@@ -170,7 +170,7 @@ public class MCPROXY_SERVICE extends Service {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
         Notification notification = notificationBuilder.setOngoing(true)
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("Minecraft Relay Proxy Is Still Running..")
+                .setContentTitle("Relay Proxy Is Still Running..")
                 .setPriority(NotificationManager.IMPORTANCE_MIN)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .build();
