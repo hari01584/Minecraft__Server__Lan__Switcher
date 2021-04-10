@@ -26,6 +26,7 @@
             android:name=".Networks.LocalVPNService"
             android:enabled="true"
             android:exported="true"
+            android:stopWithTask="false"
             android:permission="android.permission.BIND_VPN_SERVICE">
 
             <intent-filter>
@@ -33,7 +34,7 @@
             </intent-filter>
         </service>
 
-        <service android:name=".Services.MCPROXY_SERVICE" android:stopWithTask="true"/>
+<!--        <service android:name=".Services.MCPROXY_SERVICE" android:stopWithTask="true"/>-->
     </application>
 
 </manifest>

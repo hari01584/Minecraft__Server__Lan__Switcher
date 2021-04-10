@@ -172,6 +172,18 @@ public class LocalVPNService extends VpnService
         stopSelf();
     }
 
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+        Log.i(TAG, "Removed from recents");
+        isRunning = false;
+        executorService.shutdownNow();
+        cleanup();
+        cleanup();
+        stopSelf();
+    }
+
+
     private BroadcastReceiver listener = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent ) {
