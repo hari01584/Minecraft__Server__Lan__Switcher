@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PE_Server_Bridge.iml" filepath="$PROJECT_DIR$/.idea/modules/PE_Server_Bridge.iml" group="PE_Server_Bridge" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="PE Server Bridge/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PE_Server_Bridge.iml" filepath="$PROJECT_DIR$/.idea/modules/PE_Server_Bridge.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PE_Server_Bridge.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PE_Server_Bridge.app.iml" />
     </modules>
   </component>
 </project>
